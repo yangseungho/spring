@@ -2,6 +2,7 @@ package com.example.banking;
 
 import java.util.Arrays;
 
+import com.example.PostgreSQLConfig;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -12,6 +13,7 @@ import org.springframework.context.annotation.Bean;
 public class BankingApplication {
 
 	public static void main(String[] args) {
+//		PostgreSQLConfig postConfig = new PostgreSQLConfig();
 		SpringApplication.run(BankingApplication.class, args);
 	}
 //

@@ -11,4 +11,11 @@ public class AccountController {
         String url = "create.html";
         return url;
     }
+
+    @GetMapping("/account/test")
+    public String test(){
+        System.out.println("hi");
+        String url = "create.html";
+        return url;
+    }
 }
