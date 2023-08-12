@@ -1,29 +1,33 @@
 package com.example.banking.account;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import lombok.Data;
+import com.example.banking.users.Users;
 
-import java.math.BigInteger;
 import java.time.LocalDateTime;
-
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
-//@Table(name = "account2")
+@Data
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(length = 30)
+
+    @ManyToOne
+    private Users user;
+
+    @Column(length = 30, nullable = false)
     private String accountNumber;
-    @Column(length = 30)
-    private String userName;
+
+    @Column(length = 20)
+    private String bankName;
 
     @Column(name = "create_date", columnDefinition= "TIMESTAMP WITH TIME ZONE")
     private LocalDateTime createDate;
+
+    @Column(length = 40)
+    @ColumnDefault("0")
+    private Integer amount;
 }
