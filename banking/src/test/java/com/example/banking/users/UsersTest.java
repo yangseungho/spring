@@ -13,10 +13,16 @@ class UsersTest {
 
     @Test
     void testJpaInsert() {
+//        Users u1 = new Users();
+//        u1.setId("seungho_yang");
+//        u1.setPassword("1111");
+//        u1.setName("승호");
+//        u1.setCreateDate(LocalDateTime.now());
+
         Users u1 = new Users();
-        u1.setId("seungho_yang");
-        u1.setPassword("1111");
-        u1.setName("승호");
+        u1.setId("park");
+        u1.setPassword("1234");
+        u1.setName("대원");
         u1.setCreateDate(LocalDateTime.now());
 
         this.usersRepository.save(u1);
