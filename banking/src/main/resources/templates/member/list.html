@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>생성 날짜</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="member : ${memberList}">
+        <td>
+            <a th:href="@{|/member/detail/${member.id}|}" th:text="${member.mid}"></a>
+        </td>
+        <td th:text="${member.createDate}"></td>
+    </tr>
+    </tbody>
+</table>
+</html>

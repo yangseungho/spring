@@ -10,6 +10,17 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class MainController {
     @RequestMapping("/")
+    public String root(){
+        return "redirect:/login";
+    }
+
+    @RequestMapping("/index")
+    public String index(){
+        log.info("info message");
+        return "index.html";
+    }
+
+    @RequestMapping("/login")
     public String login(){
         log.trace("trace message");
         log.debug("debug message");
@@ -17,11 +28,5 @@ public class MainController {
         log.warn("warn message");
         log.error("error message");
         return "login";
-    }
-
-    @RequestMapping("/index")
-    public String index(){
-        log.info("info message");
-        return "index.html";
     }
 }

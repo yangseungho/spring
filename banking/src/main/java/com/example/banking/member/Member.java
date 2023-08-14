@@ -1,4 +1,4 @@
-package com.example.banking.users;
+package com.example.banking.member;
 
 import jakarta.persistence.*;
 import lombok.Data;
@@ -8,12 +8,15 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
-public class Users {
+public class Member {
     @Id
-    @Column(length = 30)
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    @Column(nullable = false)
+    @Column(length = 30, nullable = false)
+    private String mid;
+
+    @Column(length = 30, nullable = false)
     private String password;
 
     @Column(length = 30, nullable = false)

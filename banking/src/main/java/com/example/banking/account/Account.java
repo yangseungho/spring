@@ -3,7 +3,7 @@ package com.example.banking.account;
 import jakarta.persistence.*;
 
 import lombok.Data;
-import com.example.banking.users.Users;
+import com.example.banking.member.Member;
 
 import java.time.LocalDateTime;
 import org.hibernate.annotations.ColumnDefault;
@@ -13,13 +13,16 @@ import org.hibernate.annotations.ColumnDefault;
 public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @ManyToOne
-    private Users user;
+    private Member member;
+
+    @Column(length = 20, nullable = false)
+    private String accountNumber;
 
     @Column(length = 30, nullable = false)
-    private String accountNumber;
+    private String password;
 
     @Column(length = 20)
     private String bankName;
@@ -30,4 +33,7 @@ public class Account {
     @Column(length = 40)
     @ColumnDefault("0")
     private Integer amount;
+
+    @Column(length = 20)
+    private String accountAlias;
 }
