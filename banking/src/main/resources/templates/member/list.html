@@ -1,23 +1,27 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<table>
-    <thead>
+<div layout:fragment="content" class="container my-3">
+<table class="table">
+    <thead class="table-dark">
     <tr>
+        <th>번호</th>
         <th>ID</th>
         <th>생성 날짜</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="member : ${memberList}">
+    <tr th:each="member, loop : ${memberList}">
+        <td th:text="${loop.count}"></td>
         <td>
             <a th:href="@{|/member/detail/${member.id}|}" th:text="${member.mid}"></a>
         </td>
-        <td th:text="${member.createDate}"></td>
+        <td th:text="${#temporals.format(member.createDate, 'yyyy-MM-dd HH:mm')}"></td>
     </tr>
     </tbody>
 </table>
+</div>
 </html>

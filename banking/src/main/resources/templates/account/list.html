@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<div class="container my-3">
+<table class="table">
+    <thead class="table-light">
+    <tr>
+        <th>계좌 번호</th>
+        <th>은행</th>
+        <th>잔고</th>
+        <th>계좌 이름</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="account : ${accountList}">
+<!--        <td>-->
+<!--            <a th:href="@{|/account/detail/${account.id}|}" th:text="${account.mid}"></a>-->
+<!--        </td>-->
+        <td th:text="${account.accountNumber}"></td>
+        <td th:text="${account.bankName}"></td>
+        <td th:text="${account.amount}"></td>
+        <td th:text="${account.accountAlias}"></td>
+    </tr>
+    </tbody>
+</table>
+</div>
+</html>

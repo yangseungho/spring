@@ -18,7 +18,7 @@ public class Account {
     @ManyToOne
     private Member member;
 
-    @Column(length = 20, nullable = false)
+    @Column(length = 20, nullable = false, unique = true)
     private String accountNumber;
 
     @Column(length = 30, nullable = false)

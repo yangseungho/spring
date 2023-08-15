@@ -1,9 +1,11 @@
 package com.example.banking.member;
 
 import com.example.banking.DataNotFoundException;
+import com.example.banking.account.Account;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,5 +25,10 @@ public class MemberService {
         } else {
             throw new DataNotFoundException("member not found");
         }
+    }
+
+    public void create(Member member) {
+        member.setCreateDate(LocalDateTime.now());
+        this.memberRepository.save(member);
     }
 }

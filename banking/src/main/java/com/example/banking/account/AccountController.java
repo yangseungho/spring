@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -18,6 +19,7 @@ public class AccountController {
     @GetMapping("/create/{id}")
     public String createByMember(Model model,
                                  @PathVariable("id") Long id) {
+        model.addAttribute("account", new Account());
         model.addAttribute("mid", id);
         return "account/create";
     }
@@ -25,11 +27,11 @@ public class AccountController {
     @PostMapping("/create/{mid}")
     public String create(Model model,
                          @PathVariable("mid") Long id,
-                         @RequestBody Map<String, String> requestData) {
-        System.out.println("create call");
+                         @ModelAttribute Account accountModel) {
         Member member = this.memberService.getMember(id);
-        this.accountService.create(member, requestData);
-        return "main";
+        this.accountService.create(member, accountModel);
+        model.addAttribute("mid", id);
+        return "account/create_complete";
     }
 
     @GetMapping("/test")
@@ -40,9 +42,11 @@ public class AccountController {
         return "This is test page";
     }
 
-    @GetMapping("/account/list")
-    @ResponseBody
-    public String list(){
-        return "list";
+    @GetMapping("list/{mid}")
+    public String list(Model model,
+                       @PathVariable("mid") Long id) {
+        List<Account> accountList = this.accountService.getList();
+        model.addAttribute("accountList", accountList);
+        return "account/list";
     }
 }
