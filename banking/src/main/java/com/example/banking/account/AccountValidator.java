@@ -9,23 +9,23 @@ import org.springframework.validation.Validator;
 public class AccountValidator implements Validator {
     @Override
     public boolean supports(Class<?> clazz) {
-        return Account.class.isAssignableFrom(clazz);
+        return AccountCreateForm.class.isAssignableFrom(clazz);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
-        Account account = (Account)target;
+        AccountCreateForm account = (AccountCreateForm)target;
 
         if(!StringUtils.hasText(account.getAccountNumber())){
-            errors.rejectValue("account_number", "계좌번호를 입력하세요");
+            errors.rejectValue("accountNumber", "required", "계좌번호를 입력하세요");
         }
 
-        if(!StringUtils.hasText(account.getPassword())){
-            errors.rejectValue("password", "계좌 비밃번호를 입력해주세요");
+        if(!StringUtils.hasText(account.getPassword1()) || !StringUtils.hasText(account.getPassword2())){
+            errors.rejectValue("password", "required","계좌 비밃번호를 입력해주세요");
         }
 
         if(!StringUtils.hasText(account.getBankName())){
-            errors.rejectValue("bank_name", "은행을 입력해주세요");
+            errors.rejectValue("bankName", "required","은행을 입력해주세요");
         }
 
 //        if(account.getMember() == null){

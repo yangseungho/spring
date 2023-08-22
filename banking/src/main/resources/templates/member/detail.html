@@ -14,6 +14,8 @@
 <div> 생성날 : <span th:text="${member.createDate}"></span> </div>
 <a th:href="@{|/account/create/${member.id}|}">
     <button> 계좌 생성 </button>
+<a th:href="@{|/account/list/${member.id}|}">
+    <button> 계좌 리스트 확인 </button>
 </a>
 </body>
 </html>

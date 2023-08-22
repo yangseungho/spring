@@ -3,6 +3,7 @@ package com.example.banking.member;
 import com.example.banking.account.Account;
 import com.example.banking.account.AccountValidator;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -40,17 +41,23 @@ public class MemberController {
                          @Validated @ModelAttribute Member memberModel,
                          BindingResult bindingResult){
         if (bindingResult.hasErrors()) {
-            for(FieldError error : bindingResult.getFieldErrors()){
-                System.out.println("FieldError (" + error.getField() + "/" + error.getCode() + ")" + "  : " + error.getDefaultMessage());
-//                model.addAttribute("error", error);
-            }
-            System.out.println("===================");
-            bindingResult.addError(new ObjectError("member", "테스트 입니다."));
-            log.info("errors = {}", bindingResult);
+//            bindingResult.addError(new ObjectError("member", "테스트 입니다."));
+//            log.info("errors = {}", bindingResult);
             return "member/create";
         }
 
-        this.memberService.create(memberModel);
+        try {
+            this.memberService.create(memberModel);
+        }catch(DataIntegrityViolationException e) {
+            e.printStackTrace();
+            bindingResult.reject("signupFailed", "이미 등록된 사용자입니다.");
+            return "member/create";
+        }catch(Exception e) {
+            e.printStackTrace();
+            bindingResult.reject("signupFailed", e.getMessage());
+            return "member/create";
+        }
+
         return "member/create_complete";
     }
 

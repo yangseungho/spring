@@ -5,8 +5,8 @@
 <div layout:fragment="content" class="container">
   <h3 class="my-3 border-bottom pb-2"> 회원가입 </h3>
   <form role="form" th:action="@{/member/create}" th:object="${member}" method="post">
-    <p> 에러 메시지를 확인해주세요 </p>
     <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
+      <p> 에러 메시지를 확인해주세요 </p>
       <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />
     </div>
 
