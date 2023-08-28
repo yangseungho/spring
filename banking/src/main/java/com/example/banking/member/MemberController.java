@@ -41,8 +41,6 @@ public class MemberController {
                          @Validated @ModelAttribute Member memberModel,
                          BindingResult bindingResult){
         if (bindingResult.hasErrors()) {
-//            bindingResult.addError(new ObjectError("member", "테스트 입니다."));
-//            log.info("errors = {}", bindingResult);
             return "member/create";
         }
 
@@ -59,6 +57,11 @@ public class MemberController {
         }
 
         return "member/create_complete";
+    }
+
+    @GetMapping("/login")
+    public String login(){
+        return "login";
     }
 
     @GetMapping("/list")
