@@ -10,12 +10,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
-import java.util.Map;
+import java.security.Principal;
 
 @Controller
 @RequiredArgsConstructor
@@ -31,19 +31,19 @@ public class AccountController {
         dataBinder.addValidators(accountValidator);
     }
 
-    @GetMapping("/create/{id}")
-    public String createByMember(Model model,
-                                 @PathVariable("id") Long id) {
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/create")
+    public String createByMember(Model model) {
         model.addAttribute("accountCreateForm", new AccountCreateForm());
-        model.addAttribute("mid", id);
         return "account/create";
     }
 
-    @PostMapping("/create/{mid}")
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/create")
     public String create(Model model,
-                         @PathVariable("mid") Long id,
                          @Valid AccountCreateForm accountCreateForm,
-                         BindingResult bindingResult) {
+                         BindingResult bindingResult,
+                         Principal principal) {
         if (!accountCreateForm.getPassword1().equals(accountCreateForm.getPassword2())) {
             bindingResult.rejectValue("password2", "passwordInCorrect",
                     "2개의 패스워드가 일치하지 않습니다.");
@@ -58,7 +58,7 @@ public class AccountController {
             return "account/create";
         }
 
-        Member member = this.memberService.getMember(id);
+        Member member = this.memberService.getMember(principal.getName());
         try {
             this.accountService.create(member, accountCreateForm);
         }catch(DataIntegrityViolationException e) {
@@ -71,22 +71,23 @@ public class AccountController {
             return "account/create";
         }
 
-        model.addAttribute("mid", id);
+        model.addAttribute("mid", member.getMid());
         return "account/create_complete";
     }
 
     @GetMapping("/test")
     @ResponseBody
     public String test(){
-        System.out.println("hi");
         String url = "create";
         return "This is test page";
     }
 
-    @GetMapping("list/{mid}")
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("list")
     public String list(Model model,
-                       @PathVariable("mid") Long id) {
-        List<Account> accountList = this.accountService.getList();
+                       Principal principal) {
+        Member _member = this.memberService.getMember(principal.getName());
+        List<Account> accountList = this.accountService.getList(_member.getId());
         model.addAttribute("accountList", accountList);
         return "account/list";
     }

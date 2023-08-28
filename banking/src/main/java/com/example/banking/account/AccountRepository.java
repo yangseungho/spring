@@ -11,4 +11,5 @@ public interface AccountRepository extends JpaRepository<Account, Long> {
     Account findByBankName(String bankName);
     Account findByBankNameAndAccountNumber(String bankName, String accountNumber);
     List<Account> findByBankNameLike(String bankName);
+    List<Account> findByMemberId(Long id);
 }

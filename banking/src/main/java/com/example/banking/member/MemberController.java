@@ -4,17 +4,17 @@ import com.example.banking.account.Account;
 import com.example.banking.account.AccountValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.security.Principal;
 
 @Controller
 @RequiredArgsConstructor
@@ -71,9 +71,10 @@ public class MemberController {
         return "member/list";
     }
 
-    @GetMapping(value = "/detail/{id}")
-    public String detail(Model model, @PathVariable("id") Long id) {
-        Member member = this.memberService.getMember(id);
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping(value = "/detail")
+    public String detail(Model model, Principal principal) {
+        Member member = this.memberService.getMember(principal.getName());
         model.addAttribute("member", member);
         return "member/detail";
     }

@@ -11,9 +11,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -23,6 +25,10 @@ public class SecurityConfig {
                 .formLogin((formLogin) -> formLogin
                         .loginPage("/member/login")
                         .defaultSuccessUrl("/main"))
+                .logout((logout) -> logout
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
+                        .logoutSuccessUrl("/")
+                        .invalidateHttpSession(true))
         ;
         return http.build();
     }

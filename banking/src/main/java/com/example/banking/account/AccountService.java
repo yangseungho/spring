@@ -19,6 +19,10 @@ public class AccountService {
         return this.accountRepository.findAll();
     }
 
+    public List<Account> getList(Long id){
+        return this.accountRepository.findByMemberId(id);
+    }
+
     public void create(Member member, AccountCreateForm accountCreateForm) {
         Account account = new Account();
 

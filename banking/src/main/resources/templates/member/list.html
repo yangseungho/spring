@@ -17,7 +17,7 @@
     <tr th:each="member, loop : ${memberList}">
         <td th:text="${loop.count}"></td>
         <td>
-            <a th:href="@{|/member/detail/${member.id}|}" th:text="${member.mid}"></a>
+            <a th:href="@{/member/detail}" th:text="${member.mid}"></a>
         </td>
         <td th:text="${#temporals.format(member.createDate, 'yyyy-MM-dd HH:mm')}"></td>
     </tr>

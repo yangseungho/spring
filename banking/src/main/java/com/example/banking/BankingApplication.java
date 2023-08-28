@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Bean;
 public class BankingApplication {
 
 	public static void main(String[] args) {
-//		PostgreSQLConfig postConfig = new PostgreSQLConfig();
 		SpringApplication.run(BankingApplication.class, args);
 	}
 //

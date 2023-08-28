@@ -4,7 +4,7 @@
 <body>
 <div layout:fragment="content" class="container my-3">
     <h1> 계좌 생성</h1>
-    <form role="form" th:action="@{|/account/create/${mid}|}" th:object="${accountCreateForm}" method="post">
+    <form role="form" th:action="@{/account/create}" th:object="${accountCreateForm}" method="post">
         <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
             <p> 에러 메시지를 확인해주세요 </p>
             <div th:each="err : ${#fields.allErrors()}" th:text="${err}" />

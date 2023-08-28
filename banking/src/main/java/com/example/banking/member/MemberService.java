@@ -29,6 +29,15 @@ public class MemberService {
         }
     }
 
+    public Member getMember(String username) {
+        Optional<Member> member = this.memberRepository.findByMid(username);
+        if (member.isPresent()) {
+            return member.get();
+        } else {
+            throw new DataNotFoundException("member not found");
+        }
+    }
+
     public void create(Member member) {
         member.setPassword(passwordEncoder.encode(member.getPassword()));
         member.setCreateDate(LocalDateTime.now());
